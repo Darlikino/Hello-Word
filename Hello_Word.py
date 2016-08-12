@@ -9,3 +9,12 @@ def hi():
         print("how are you?")
 
 hi()
+answer = input("->")
+
+def otvet():
+    if answer == "ok":
+        print("i am ok too")
+    else:
+        print("sorry")
+
+otvet()
