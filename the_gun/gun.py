@@ -12,6 +12,9 @@ class Ball:
     available_colors = ['green', 'blue', 'red']
 
     def __init__(self):
+        """
+        СОздает шарик в случайном месте игрового поля
+        """
         R = randint(Ball.minimal_radius, Ball.maximum_radius)
         x = randint(0, screen_width-1-2*R)
         y = randint(0, screen_height-1-2*R)
@@ -27,19 +30,20 @@ class Ball:
     def fly(self):
         self._x +=self._Vx
         self._y +=self._Vy
-        if self._x <0:
+        #отбивается от гор стенок
+        if self._x < 0:
             self._x = 0
-            self._Vx = -self.Vx
+            self._Vx = -self._Vx
         elif self._x + 2*self._R>= screen_width:
             self._x = screen_width - 2*self._R -1
-            self._Vx = -self.Vx
-
-        if self._y <0:
+            self._Vx = -self._Vx
+        #отбивается от вертик стенок
+        if self._y < 0:
             self._y = 0
-            self._Vy = -self.Vy
+            self._Vy = -self._Vy
         elif self._y + 2*self._R >= screen_height:
             self._y = screen_height - 2*self._R -1
-            self._Vy = -self.Vy
+            self._Vy = -self._Vy
 
 
         canvas.coords(self._avatar, self._x, self._y, self._x + 2*self._R, self._y + 2*self._R)
@@ -55,21 +59,27 @@ class Gun:
                                           self._y+self._ly)
 
     def shoot(self):
+        """
+        return возвращает объект снаряда
+        """
         shell = Ball()
         shell._x = self._x + self._lx
         shell._y = self._y + self._ly
         shell._Vx = self._lx/10
-        shell._Vx = self._lx/10
+        shell._Vy = self._ly/10
         shell._R = 5
         shell.fly()
         return shell
 
 
 def init_game():
+    """
+    создаем шарики и пушку
+    """
     global balls, gun, shells_on_fly
     balls = [Ball() for i in range(Ball.initial_number)]
     shells_on_fly = []
-    gen = Gun()
+    gun = Gun()
 
 
 
@@ -85,7 +95,7 @@ def init_main_window():
     canvas.bind('<Button-1>', click_event_handler)
 
 def timer_event():
-
+#периодические расчеты
     for ball in balls:
         ball.fly()
     for shell in shells_on_fly:
@@ -102,3 +112,4 @@ if __name__ == "__main__":
     init_game()
     timer_event()
     root.mainloop()
+    print("Thank for the game")
