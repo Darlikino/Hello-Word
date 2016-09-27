@@ -1,0 +1,13 @@
+import pyowm
+#программа показывает погоду в городах
+city = input('Какой город Вас интересует?: ')
+
+owm = pyowm.OWM('09c19f19b22474c22e06114c2264e135')
+
+observation = owm.weather_at_place(city)
+
+w = observation.get_weather()
+temperature = w.get_temperature('celsius')['temp']
+
+print("В городе " + city + " сейчас температура: " + str(temperature)+ " по цельсию")
+print("Также, в городе " + city +" "+ w.get_detailed_status())
