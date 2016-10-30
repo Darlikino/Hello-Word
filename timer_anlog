@@ -1,0 +1,26 @@
+import time
+import pygame
+
+
+def song():
+    """Воспроизведение песни"""
+
+    mp3 = 'C:\Code\Timer\lesnik.mp3'
+
+    pygame.init()
+    pygame.display.set_mode((400, 300))
+    pygame.display.set_caption('Timer')
+
+    pygame.mixer.music.load(mp3)
+    pygame.mixer.music.play()
+    time.sleep(30)
+    pygame.mixer.music.stop()
+    pygame.quit()
+
+x = 15
+for i in range(x, 0, -1):
+    print('{0:02d}:{1:02d}:{2:02d}'.format(i//3600, (i//60)%60, i%60))
+
+    time.sleep(1)
+    if i == 1:
+        song()
